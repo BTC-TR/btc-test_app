@@ -1,0 +1,34 @@
+<mvc:View controllerName="com.sahterm.satis_terminal.controller.Worklist" xmlns="sap.m" xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:card="sap.f.cards" xmlns:l="sap.ui.layout">
+	<Page>
+		<customHeader>
+			<Toolbar>
+				<Button text="{i18n>btnBack}" type="Back" press="onBack"/>
+				<Title text="{i18n>appTitle}" level="H1"/>
+			</Toolbar>
+		</customHeader>
+		<content>
+			<FlexBox alignItems="Center" direction="Column" height="100%" justifyContent="Center" width="100%">
+				<items>
+					<f:Card class="sapUiMediumMargin" width="300px">
+						<f:content>
+							<form:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+								labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+								singleContainerFullSize="false">
+								<form:content>
+									<Label text="Gönderilen Teslimat"/>
+									<!--	<Input id="idInputTeslimatNo" placeholder="Okutunuz!" value="{deliveryModel>/deliveryNo}"
+										 submit="onPressNext"
+										 showClearIcon="true" showValueHelp="true" valueHelpIconSrc="sap-icon://search" valueHelpRequest="onPressNext" maxLength="8"
+										 />-->
+									<SearchField id="idInputTeslimatNo" placeholder="Okutunuz!" value="{deliveryModel>/deliveryNo}" liveChange="onPressNext" maxLength="8"
+										search="onSubmitDeliveryNo"/>
+								</form:content>
+							</form:SimpleForm>
+						</f:content>
+					</f:Card>
+				</items>
+			</FlexBox>
+		</content>
+	</Page>
+</mvc:View>

@@ -1,0 +1,75 @@
+<mvc:View controllerName="com.sahterm.satis_terminal.controller.ItemDetail" xmlns="sap.m" xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:card="sap.f.cards">
+	<Page showNavButton="true" navButtonPress="onPressNavButton" title="Ürün No: {deliveryModel>/ItemNo}">
+		<content>
+			<ScrollContainer height="100%" width="100%" focusable="true" vertical="true" horizontal="true">
+				<FlexBox justifyContent="Center">
+					<items>
+						<f:Card class="sapUiMediumMargin" width="300px">
+							<f:content>
+								<form:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+									labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+									singleContainerFullSize="false">
+									<form:content>
+										<!-- Kaynak Depo Adresi -->
+										<Label text="{i18n>txtSourceWarehouse}" required="true"  design="Bold"/>
+										<Input id="idSourceWareHouse" placeholder="{i18n>txtSourceWarehouse}" showClearIcon="true" value="{viewModel>/WarehouseNo}" maxLength="18"
+											showValueHelp="true" valueHelpIconSrc="sap-icon://search" valueHelpRequest=".onSearchClickWareHouse" submit="onSumbitAdres"
+											change="onChangeSourceWarehouse"
+											/>
+										<!--Üst Düzey Palet No -->
+										<Label text="{i18n>txtPalletNo}" required="true"  design="Bold"/>
+										<Input showClearIcon="true" placeholder="{i18n>txtPalletNo}" id="idPalletNo" value="{viewModel>/PalletNo}" submit="onSumbitPallet"
+											showValueHelp="true" valueHelpIconSrc="sap-icon://search" valueHelpRequest=".onSearchClick" liveChange=".onLivePallet"
+											
+											maxLength="10"
+											/>
+										<!--Palet (Etiket No) -->
+										<Label text="{i18n>txtTag}" required="true"  design="Bold"/>
+										<Input value="{viewModel>/TagNo}" id="idTag" placeholder="{i18n>TagNo}" valueHelpIconSrc="sap-icon://search" liveChange="onLiveChangeTagNo"/>
+										<!--Malzeme -->
+										<Label text="{i18n>txtMaterial}"  design="Bold"/>
+										<Text text="{itemDetailModel>/Productno}"/>
+										<!--Malzeme Tanımı-->
+										<Label text="{i18n>txtMaterialDescription}" design="Bold"/>
+										<Text text="{itemDetailModel>/Maktx}"/>
+										<!--Parti-->
+										<Label text="{i18n>txtBatch}"  design="Bold"/>
+										<Text text="{itemDetailModel>/Batchno}"/>
+										<!-- Toplanmış Miktar -->
+										<Label text="{i18n>txtCollectedQuantity}"  design="Bold"/>
+										<ObjectNumber number="{parts: [{path: 'viewModel>/menge'}, {path:'itemDetailModel>/Uom'}], formatter: '.formatter.numberUnit'}"
+											unit="{itemDetailModel>/Uom}" state="Warning"/>
+										<!-- Toplam Miktar -->
+										<Label text="{i18n>txtTotalQuantity}"  design="Bold"/>
+										<ObjectNumber number="{parts: [{path: 'itemDetailModel>/Qty'}, {path:'itemDetailModel>/Uom'}], formatter: '.formatter.numberUnit'}"
+											unit="{itemDetailModel>/Uom}" state="Success"/>
+									</form:content>
+								</form:SimpleForm>
+							</f:content>
+						</f:Card>
+					</items>
+				</FlexBox>
+			</ScrollContainer>
+		</content>
+		<footer>
+			<Toolbar>
+				  <Button
+                    id="_IDGenButton2"
+                    icon="sap-icon://alert"
+                    text="{=${deliveryModel>/messages}.length}"
+                    type="Ghost"
+                    press="onMessageOpen"
+                />
+				<ToolbarSpacer/>
+				<Button enabled="{= ${viewModel>/Durum} === 'YES' ? false : true }" text="Temizle" type="Reject" press="onPressClean"/>
+				<Button text="Detay" type="Emphasized" press="onPressDeliveryDetail">
+					<customData>
+						<BadgeCustomData key="badge" value="{= ${deliveryModel>/LogList}.length }" visible="true"/>
+					</customData>
+				</Button>
+				<Button enabled="{= ${viewModel>/Durum} === 'YES' ? false : true }" text="Kaydet" type="Accept" press="onPressSave"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

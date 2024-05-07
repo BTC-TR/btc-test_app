@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<MessagePopover items="{deliveryModel>/messages}" placement="Top" >
+		<items>
+			<MessageItem  description="{deliveryModel>Number}" subtitle="{deliveryModel>Id}" title="{deliveryModel>Message}"
+				type="{= ${deliveryModel>Type} === 'E' ? 'Error' : ${deliveryModel>Type} === 'S' ? 'Success' : 'Warning'}"/>
+		</items>
+	</MessagePopover>
+</core:FragmentDefinition>  

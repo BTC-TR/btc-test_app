@@ -1,0 +1,85 @@
+<mvc:View controllerName="com.sahterm.satis_terminal.controller.AgirlikToplama" xmlns="sap.m" xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:card="sap.f.cards" xmlns:core="sap.ui.core">
+	<Page showNavButton="true" navButtonPress="onPressNavButton" title="{deliveryModel>/deliveryNo}/{deliveryModel>/ItemNo}">
+		<content>
+			<ScrollContainer height="100%" width="100%" focusable="true" vertical="true" horizontal="true">
+				<VBox>
+					<FlexBox justifyContent="Center" visible="{= ${deliveryModel>/Tamamlandi} === true ? false : true }">
+						<items>
+							<f:Card class="sapUiMediumMargin" width="200px">
+								<f:content>
+									<form:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+										labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+										singleContainerFullSize="false">
+										<form:content>
+											<!-- okutulan ağırlık -->
+											<Label text="{i18n>txtWeight}" required="true"/>
+											<Input id="idAgirlik" placeholder="{i18n>txtWeightGiriniz}" showClearIcon="true" value="{viewModel>/agirlik}"
+												liveChange="onLiveAgirlik"/>
+										</form:content>
+									</form:SimpleForm>
+								</f:content>
+							</f:Card>
+						</items>
+					</FlexBox>
+					<Table id="idDetailTable" width="auto" items="{viewModel>/AgirlikList}" class="sapUiResponsiveMargin" mode="MultiSelect">
+						<headerToolbar>
+							<OverflowToolbar>
+								<content>
+									<Title text="Okutulan Koliler" level="H2"/>
+									<ToolbarSpacer/>
+									<Button id="idBtnDelete" press="onPressDeleteItem" icon="sap-icon://delete" iconFirst="true"
+										visible="{= ${deliveryModel>/Tamamlandi} === true ? false : true }" type="Reject"/>
+								</content>
+							</OverflowToolbar>
+						</headerToolbar>
+						<infoToolbar>
+							<OverflowToolbar>
+								<Label text="Toplam({viewModel>/menge} Kg)"/>
+							</OverflowToolbar>
+						</infoToolbar>
+						<columns>
+							<!--Pallet no-->
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>txtPallet}"/>
+							</Column>
+							<!--Miktar -->
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>Miktar}"/>
+							</Column>
+							<!--Tarih -->
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>txtDate}"/>
+							</Column>
+							<!--Saat -->
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>txtTime}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem type="Inactive" press="onPressList">
+								<cells>
+									<!--Pallet no-->
+									<ObjectNumber number="{viewModel>Palet}" state="Information"/>
+									<!--Miktar -->
+									<ObjectNumber number="{parts: [{path: 'viewModel>Menge'}, {path:'viewModel>Meins'}], formatter: '.formatter.numberUnit'}"
+										unit="{viewModel>Meins}"/>
+									<!--Tarih -->
+									<Text text="{ path : 'viewModel>Datum' , type : 'sap.ui.model.type.Date' , formatOptions: { style : 'long' } }"/>
+									<!--Saat -->
+									<Text text="{path: 'viewModel>Uzeit', type: 'sap.ui.model.odata.type.Time'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</VBox>
+			</ScrollContainer>
+		</content>
+
+		<footer>
+			<Toolbar>
+				<Label text="{=${viewModel>/AgirlikList}.length}. Palet" design="Bold"></Label>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -1,0 +1,68 @@
+<mvc:View xmlns="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:m="sap.m"
+	controllerName="com.sahterm.satis_terminal.controller.Object" height="100%">
+	<m:Page showHeader="true" enableScrolling="false" title="Teslimat No: {deliveryModel>/deliveryNo}" showNavButton="true"
+		navButtonPress="onPressNavButton">
+		<m:content>
+			<Table id="idTable" rows="{deliveryModel>/List}" selectionMode="Single" visibleRowCount="7" rowSelectionChange="onSelectionChangeItem"
+				selectionBehavior="RowOnly">
+				<rowSettingsTemplate>
+					<RowSettings highlight="{= ${deliveryModel>StatusPick} === '9' ? 'Success' : ${deliveryModel>StatusPick} === '2' ? 'Warning' : 'Error'}"
+					highlightText="{StatusText}"/>
+				</rowSettingsTemplate>
+				<extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Teslimat Listesi ({= ${deliveryModel>/List}.length })"/>
+						<m:ToolbarSpacer/>
+						<m:SearchField placeholder="Ara" value="{ui>/filterValue}" width="10rem" liveChange="handleTxtFilter"/>
+					</m:OverflowToolbar>
+				</extension>
+				<columns>
+					<Column sortProperty="Itemno" width="5rem" defaultFilterOperator="StartsWith">
+						<m:Label text="{i18n>txtItemNo}"/>
+						<template>
+							<m:Text text="{deliveryModel>Itemno}" wrapping="false"/>
+						</template>
+					</Column>
+					<Column width="8rem" defaultFilterOperator="StartsWith" > 
+						<m:Label text="{i18n>txtBatch}"/>
+						<template>
+							<m:Text text="{deliveryModel>Batchno}" wrapping="false"/>
+						</template>
+					</Column>
+					<Column width="auto" defaultFilterOperator="StartsWith">
+						<m:Label text="{i18n>txtMaterialDesc}"/>
+						<template>
+							<m:Text text="{deliveryModel>Maktx}" wrapping="false"/>
+						</template>
+					</Column>
+					<Column width="auto" sortProperty="Durum">
+						<m:Label text="{i18n>txtItemStatus}"/>
+						<template>
+							<m:ObjectStatus
+								text="{= ${deliveryModel>StatusPick} === '9' ? 'Tamamlandı' : ${deliveryModel>StatusPick} === '2' ? 'Kısmen Tamamlandı' : 'Başlamadı'}"
+								state="{= ${deliveryModel>StatusPick} === '9' ? 'Success' : ${deliveryModel>StatusPick} === '2' ? 'Warning' : 'Error'}"/>
+						</template>
+					</Column>
+					<Column width="auto" visible="{deliveryModel>/weightVisible}">
+						<m:Label text="{i18n>txtItemWeigth}" width="7rem"/>
+						<template>
+							<m:Button width="100%" icon="sap-icon://compare"
+								text="{parts: [{path: 'deliveryModel>Agirlik'}, 'KG'], formatter: '.formatter.numberUnit'} KG"
+								enabled="{= ${deliveryModel>StatusPick} === '9' ? true : false}" type="{= ${deliveryModel>Tamamlandi} === true ? 'Success' : 'Default'}"
+								press="onPressWeight"></m:Button>
+						</template>
+					</Column>
+				</columns>
+			</Table>
+		</m:content>
+		<m:footer>
+			<m:Toolbar>
+				<m:Label text="{deliveryModel>/List/0/EvCount}" design="Bold"></m:Label>
+				<m:ToolbarSpacer/>
+				<m:Button text="Mal Çıkış Kaydet" type="Accept" press="onPressSave" enabled="{deliveryModel>/enabledMalKabul}"/>
+				<m:Button text="Ağırlık Kaydet" type="Default" press="onSaveWeight" enabled="{deliveryModel>/enabledAgirlik}"
+					visible="{deliveryModel>/weightVisible}"/>
+			</m:Toolbar>
+		</m:footer>
+	</m:Page>
+</mvc:View>

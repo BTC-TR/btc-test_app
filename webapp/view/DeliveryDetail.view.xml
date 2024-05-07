@@ -1,0 +1,75 @@
+<mvc:View controllerName="com.sahterm.satis_terminal.controller.DeliveryDetail" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified"
+	xmlns:core="sap.ui.core" xmlns="sap.m" height="100%">
+	<Page showHeader="true" enableScrolling="true" title="Satış No: {deliveryModel>/deliveryNo}/{deliveryModel>/ItemNo}" showNavButton="true"
+		navButtonPress="onPressNavButton">
+		<subHeader >
+			<Toolbar design="Transparent">
+				<Title level="Auto" id="title" text="Detay ({= ${deliveryModel>/LogList}.length })"/>
+				<ToolbarSpacer/>
+				<SearchField placeholder="Ara" value="{ui>/filterValue}" liveChange="handleTxtFilter" width="10rem"/>
+				<Button id="idBtnDelete" press="onPressDeleteItem" icon="sap-icon://delete" iconFirst="true" visible="true" type="Reject"/>
+			</Toolbar>
+		</subHeader>
+		<content>
+			<Table id="idDetailTable" width="auto" items="{deliveryModel>/LogList}" class="sapUiResponsiveMargin" mode="MultiSelect">
+				<columns>
+					<!--Pallet no-->
+					<Column demandPopin="true">
+						<Text text="{i18n>txtPallet}"/>
+					</Column>
+					<!--Tag no-->
+					<Column demandPopin="true">
+						<Text text="{i18n>txtTag}"/>
+					</Column>
+					<!--Material Desc -->
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>txtMaterialDesc}"/>
+					</Column>
+					<!--Parti -->
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>txtParti}"/>
+					</Column>
+					<!--Miktar -->
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>txtMiktar}"/>
+					</Column>
+					<!--Kaynak Depo -->
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>txtKaynakDepo}"/>
+					</Column>
+					<!--Tarih -->
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>txtDate}"/>
+					</Column>
+					<!--Saat -->
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>txtTime}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Inactive" press="onPressList">
+						<cells>
+							<!--Pallet no-->
+							<ObjectNumber number="{deliveryModel>Palet}" state="Information"/>
+							<!--Tag no-->
+							<ObjectNumber number="{deliveryModel>Etiket}" state="Information"/>
+							<!--Material Desc -->
+							<Text text="{deliveryModel>Matnr}"/>
+							<!--Parti -->
+							<ObjectNumber number="{deliveryModel>Charg}"/>
+							<!--Miktar -->
+							<ObjectNumber number="{parts: [{path: 'deliveryModel>Menge'}, {path:'deliveryModel>Uom'}], formatter: '.formatter.numberUnit'}"
+								unit="{deliveryModel>Uom}"/>
+							<!--Kaynak Depo -->
+							<Text text="{deliveryModel>Lgpla}"/>
+							<!--Tarih -->
+							<Text text="{ path : 'deliveryModel>Datum' , type : 'sap.ui.model.type.Date' , formatOptions: { style : 'long' } }"/>
+							<!--Saat -->
+							<Text text="{deliveryModel>time}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</Page>
+</mvc:View>
